@@ -271,6 +271,32 @@
                 margin: 0 auto;
             }
         }
+
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loader-spinner {
+            width: 56px;
+            height: 56px;
+            border: 6px solid rgba(255,255,255,0.4);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -384,6 +410,10 @@
         </div>
     </div>
 
+    <div id="loaderOverlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+
     <script>
         // Photo preview functionality
         document.getElementById('photo').addEventListener('change', function(e) {
@@ -425,6 +455,8 @@
             
             const formData = new FormData(this);
             const messageDiv = document.getElementById('message');
+            const loader = document.getElementById('loaderOverlay');
+            const submitBtn = this.querySelector('.submit-btn');
             
             // Show loading message
             messageDiv.style.display = 'block';
@@ -432,6 +464,8 @@
             messageDiv.style.background = '#e3f2fd';
             messageDiv.style.color = '#0d47a1';
             messageDiv.textContent = 'Submitting your application... Please wait.';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.7'; submitBtn.style.cursor = 'not-allowed'; }
+            if (loader) { loader.style.display = 'flex'; }
             
             fetch('submit_form.php', {
                 method: 'POST',
@@ -451,12 +485,17 @@
                 } else {
                     messageDiv.className = 'message error';
                     messageDiv.textContent = data.message;
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
                 }
             })
             .catch(error => {
                 messageDiv.style.display = 'block';
                 messageDiv.className = 'message error';
                 messageDiv.textContent = 'An error occurred. Please try again.';
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+            })
+            .finally(() => {
+                if (loader) { loader.style.display = 'none'; }
             });
         });
     </script>
