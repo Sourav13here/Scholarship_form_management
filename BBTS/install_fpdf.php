@@ -13,7 +13,7 @@ if (!file_exists('fpdf')) {
 }
 
 // Download FPDF
-$fpdfUrl = 'http://www.fpdf.org/en/download/fpdf185.zip';
+$fpdfUrl = 'https://www.fpdf.org/en/dl.php?v=186&f=zip';
 $zipFile = 'fpdf.zip';
 
 echo "Downloading FPDF from $fpdfUrl...\n";

@@ -39,7 +39,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
             }
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: #0d47a1;
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
@@ -54,7 +54,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 max-width: 400px;
             }
             h2 {
-                color: #667eea;
+                color: #0d47a1;
                 margin-bottom: 30px;
                 text-align: center;
             }
@@ -76,12 +76,12 @@ if (!isset($_SESSION['admin_logged_in'])) {
             }
             input:focus {
                 outline: none;
-                border-color: #667eea;
+                border-color: #0d47a1;
             }
             button {
                 width: 100%;
                 padding: 12px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: #0d47a1;
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -150,7 +150,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0d47a1;
             color: white;
             padding: 20px 30px;
             display: flex;
@@ -199,7 +199,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
         }
 
         .stat-card h3 {
-            color: #667eea;
+            color: #0d47a1;
             font-size: 14px;
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -239,7 +239,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
         }
 
         th {
-            background: #667eea;
+            background: #0d47a1;
             color: white;
             padding: 15px;
             text-align: left;
@@ -258,7 +258,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
         }
 
         .download-btn {
-            background: #667eea;
+            background: #0d47a1;
             color: white;
             padding: 8px 15px;
             border: none;
@@ -270,7 +270,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
         }
 
         .download-btn:hover {
-            background: #5568d3;
+            background: #1565c0;
         }
 
         .export-btn {
