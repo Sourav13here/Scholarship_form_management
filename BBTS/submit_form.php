@@ -10,6 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requiredFields = ['name', 'class', 'school', 'address', 'contact', 'email', 'declaration'];
     $missingFields = [];
     
+    // Create uploads directory if it doesn't exist
+    $uploadsDir = __DIR__ . '/uploads';
+    if (!file_exists($uploadsDir)) {
+        mkdir($uploadsDir, 0755, true);
+    }
+    
     foreach ($requiredFields as $field) {
         if (empty($_POST[$field])) {
             $missingFields[] = $field;
@@ -42,8 +48,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
+    // Validate photo upload
+    if (!isset($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Please upload a photo'
+        ]);
+        exit;
+    }
+    
+    // Validate photo file type
+    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    $fileType = $_FILES['photo']['type'];
+    if (!in_array($fileType, $allowedTypes)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid photo format. Only JPG, JPEG, and PNG are allowed'
+        ]);
+        exit;
+    }
+    
+    // Validate photo file size (2MB max)
+    if ($_FILES['photo']['size'] > 2 * 1024 * 1024) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Photo size must be less than 2MB'
+        ]);
+        exit;
+    }
+    
     // Generate unique application ID
     $applicationId = 'NCI' . date('Y') . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+    
+    // Handle photo upload
+    $photoExtension = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+    $photoFileName = $applicationId . '_' . time() . '.' . $photoExtension;
+    $photoPath = $uploadsDir . '/' . $photoFileName;
+    
+    if (!move_uploaded_file($_FILES['photo']['tmp_name'], $photoPath)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to upload photo. Please try again'
+        ]);
+        exit;
+    }
     
     try {
         $db = getDBConnection();
@@ -63,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $db->prepare("
             INSERT INTO applications (
                 application_id, name, class, school, address, 
-                contact, alt_contact, email, achievements, declaration
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                contact, alt_contact, email, photo, achievements, declaration
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
         
         $stmt->execute([
@@ -76,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_POST['contact'],
             $_POST['alt_contact'] ?? '',
             $_POST['email'],
+            $photoFileName,
             $_POST['achievements'] ?? '',
             1
         ]);

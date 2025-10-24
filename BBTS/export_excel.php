@@ -35,9 +35,9 @@ echo '<body>';
 
 // Title
 echo '<table>';
-echo '<tr class="header-row"><td colspan="10" style="text-align: center; padding: 15px; font-size: 18px;">Nucleon Coaching Institute - Scholarship Applications</td></tr>';
-echo '<tr><td colspan="10" style="text-align: center; padding: 5px; font-size: 12px;">Generated on: ' . date('d-M-Y H:i:s') . '</td></tr>';
-echo '<tr><td colspan="10" style="padding: 5px;"></td></tr>'; // Empty row
+echo '<tr class="header-row"><td colspan="11" style="text-align: center; padding: 15px; font-size: 18px;">Nucleon Coaching Institute - Scholarship Applications</td></tr>';
+echo '<tr><td colspan="11" style="text-align: center; padding: 5px; font-size: 12px;">Generated on: ' . date('d-M-Y H:i:s') . '</td></tr>';
+echo '<tr><td colspan="11" style="padding: 5px;"></td></tr>'; // Empty row
 
 // Headers
 echo '<tr>';
@@ -49,6 +49,7 @@ echo '<th>Address</th>';
 echo '<th>Contact Number</th>';
 echo '<th>Alternative Number</th>';
 echo '<th>Email</th>';
+echo '<th>Photo</th>';
 echo '<th>Achievements</th>';
 echo '<th>Submission Date</th>';
 echo '</tr>';
@@ -64,15 +65,16 @@ foreach ($applications as $app) {
     echo '<td>' . htmlspecialchars($app['contact']) . '</td>';
     echo '<td>' . htmlspecialchars($app['alt_contact'] ?? '-') . '</td>';
     echo '<td>' . htmlspecialchars($app['email']) . '</td>';
+    echo '<td>' . htmlspecialchars($app['photo'] ?? 'No photo') . '</td>';
     echo '<td>' . htmlspecialchars($app['achievements'] ?? '-') . '</td>';
     echo '<td>' . date('Y-m-d H:i', strtotime($app['submission_date'])) . '</td>';
     echo '</tr>';
 }
 
 // Summary row
-echo '<tr><td colspan="10" style="padding: 5px;"></td></tr>'; // Empty row
+echo '<tr><td colspan="11" style="padding: 5px;"></td></tr>'; // Empty row
 echo '<tr style="background-color: #e9ecef; font-weight: bold;">';
-echo '<td colspan="9" style="text-align: right; padding: 10px;">Total Applications:</td>';
+echo '<td colspan="10" style="text-align: right; padding: 10px;">Total Applications:</td>';
 echo '<td style="padding: 10px;">' . count($applications) . '</td>';
 echo '</tr>';
 

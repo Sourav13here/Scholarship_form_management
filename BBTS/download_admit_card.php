@@ -63,43 +63,93 @@ try {
     // Create a bordered section
     $startY = $pdf->GetY();
     
-    // Details
+    // Add student photo if available
+    if (!empty($application['photo'])) {
+        $photoPath = __DIR__ . '/uploads/' . $application['photo'];
+        if (file_exists($photoPath)) {
+            // Position photo in top right corner of the information section
+            $photoX = 160;
+            $photoY = $startY;
+            $photoWidth = 35;
+            $photoHeight = 45;
+            
+            // Add photo border
+            $pdf->Rect($photoX, $photoY, $photoWidth, $photoHeight);
+            
+            // Add photo
+            $pdf->Image($photoPath, $photoX + 1, $photoY + 1, $photoWidth - 2, $photoHeight - 2);
+        }
+    }
+    
+    // Details (adjust width to accommodate photo on right)
+    $detailsWidth = !empty($application['photo']) ? 105 : 0; // Leave space for photo
+    
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'Name:', 0, 0);
     $pdf->SetFont('Arial', '', 11);
-    $pdf->Cell(0, 8, $application['name'], 0, 1);
+    if ($detailsWidth > 0) {
+        $pdf->Cell($detailsWidth, 8, $application['name'], 0, 1);
+    } else {
+        $pdf->Cell(0, 8, $application['name'], 0, 1);
+    }
     
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'Class:', 0, 0);
     $pdf->SetFont('Arial', '', 11);
-    $pdf->Cell(0, 8, $application['class'], 0, 1);
+    if ($detailsWidth > 0) {
+        $pdf->Cell($detailsWidth, 8, $application['class'], 0, 1);
+    } else {
+        $pdf->Cell(0, 8, $application['class'], 0, 1);
+    }
     
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'School:', 0, 0);
     $pdf->SetFont('Arial', '', 11);
-    $pdf->MultiCell(0, 8, $application['school'], 0, 1);
+    $currentX = $pdf->GetX();
+    $currentY = $pdf->GetY();
+    if ($detailsWidth > 0) {
+        $pdf->MultiCell($detailsWidth, 8, $application['school'], 0, 'L');
+    } else {
+        $pdf->MultiCell(0, 8, $application['school'], 0, 'L');
+    }
     
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'Contact:', 0, 0);
     $pdf->SetFont('Arial', '', 11);
-    $pdf->Cell(0, 8, $application['contact'], 0, 1);
+    if ($detailsWidth > 0) {
+        $pdf->Cell($detailsWidth, 8, $application['contact'], 0, 1);
+    } else {
+        $pdf->Cell(0, 8, $application['contact'], 0, 1);
+    }
     
     if (!empty($application['alt_contact'])) {
         $pdf->SetFont('Arial', 'B', 11);
         $pdf->Cell(50, 8, 'Alt. Contact:', 0, 0);
         $pdf->SetFont('Arial', '', 11);
-        $pdf->Cell(0, 8, $application['alt_contact'], 0, 1);
+        if ($detailsWidth > 0) {
+            $pdf->Cell($detailsWidth, 8, $application['alt_contact'], 0, 1);
+        } else {
+            $pdf->Cell(0, 8, $application['alt_contact'], 0, 1);
+        }
     }
     
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'Email:', 0, 0);
     $pdf->SetFont('Arial', '', 11);
-    $pdf->Cell(0, 8, $application['email'], 0, 1);
+    if ($detailsWidth > 0) {
+        $pdf->Cell($detailsWidth, 8, $application['email'], 0, 1);
+    } else {
+        $pdf->Cell(0, 8, $application['email'], 0, 1);
+    }
     
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'Address:', 0, 0);
     $pdf->SetFont('Arial', '', 11);
-    $pdf->MultiCell(0, 8, $application['address'], 0, 1);
+    if ($detailsWidth > 0) {
+        $pdf->MultiCell($detailsWidth, 8, $application['address'], 0, 'L');
+    } else {
+        $pdf->MultiCell(0, 8, $application['address'], 0, 'L');
+    }
     
     $endY = $pdf->GetY();
     $pdf->Rect(10, $startY - 2, 190, $endY - $startY + 4);

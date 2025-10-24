@@ -28,6 +28,7 @@ function initializeDatabase() {
         contact TEXT NOT NULL,
         alt_contact TEXT,
         email TEXT NOT NULL,
+        photo TEXT,
         achievements TEXT,
         declaration INTEGER NOT NULL,
         submission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -43,8 +44,40 @@ function initializeDatabase() {
     }
 }
 
+// Migrate database to add photo column if it doesn't exist
+function migrateDatabase() {
+    $db = getDBConnection();
+    
+    try {
+        // Check if photo column exists
+        $result = $db->query("PRAGMA table_info(applications)");
+        $columns = $result->fetchAll(PDO::FETCH_ASSOC);
+        $hasPhotoColumn = false;
+        
+        foreach ($columns as $column) {
+            if ($column['name'] === 'photo') {
+                $hasPhotoColumn = true;
+                break;
+            }
+        }
+        
+        // Add photo column if it doesn't exist
+        if (!$hasPhotoColumn) {
+            $db->exec("ALTER TABLE applications ADD COLUMN photo TEXT");
+        }
+        
+        return true;
+    } catch(PDOException $e) {
+        error_log("Database migration failed: " . $e->getMessage());
+        return false;
+    }
+}
+
 // Initialize database on first load
 if (!file_exists(DB_PATH)) {
     initializeDatabase();
+} else {
+    // Run migration for existing databases
+    migrateDatabase();
 }
 ?>
