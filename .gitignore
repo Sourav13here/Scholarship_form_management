@@ -1,0 +1,77 @@
+# Nucleon Scholarship System - Git Ignore File
+
+# Database files (contains sensitive student data)
+*.db
+*.db-journal
+scholarship.db
+database.db
+
+# Composer dependencies
+/vendor/
+composer.lock
+
+# FPDF library fonts (can be regenerated)
+BBTS/fpdf/font/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# PHP cache
+*.cache
+
+# Error logs
+error_log
+php_errors.log
+debug.log
+
+# Environment files (if you add them later)
+.env
+.env.local
+
+# User uploaded files (if you add upload feature)
+uploads/
+files/
+
+# Test files
+test.php
+debug.php
+
+# Windows batch output
+*.bat.log
+
+# Node modules (if you add npm later)
+node_modules/
+
+# Build files
+dist/
+build/
+
+# Coverage reports
+coverage/
+
+# Package files
+*.zip
+*.tar.gz
+*.rar

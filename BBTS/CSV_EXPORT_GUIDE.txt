@@ -1,0 +1,191 @@
+================================================================================
+                    CSV EXPORT FEATURE - USER GUIDE
+================================================================================
+
+📊 OVERVIEW
+-----------
+The admin panel now includes a CSV export feature that allows you to download
+all scholarship application data in a spreadsheet-compatible format.
+
+================================================================================
+HOW TO USE
+================================================================================
+
+1. Login to Admin Panel
+   - Visit: http://localhost:8000/admin-panel.php
+   - Username: admin
+   - Password: admin123
+
+2. Click "Export to CSV" Button
+   - Located in the top-right of the applications section
+   - Green button with 📊 icon
+
+3. File Download
+   - CSV file will download automatically
+   - Filename format: scholarship_applications_YYYY-MM-DD_HH-MM-SS.csv
+   - Example: scholarship_applications_2024-10-24_16-30-45.csv
+
+================================================================================
+CSV FILE CONTENTS
+================================================================================
+
+The exported CSV file includes the following columns:
+
+1.  Application ID       - Unique ID (e.g., NCI20240001)
+2.  Name                 - Student's full name
+3.  Class                - Current class
+4.  School               - School name
+5.  Address              - Complete address
+6.  Contact Number       - Primary contact (10 digits)
+7.  Alternative Number   - Secondary contact (if provided)
+8.  Email                - Email address
+9.  Achievements         - Science/Math achievements
+10. Submission Date      - Date and time of submission
+11. Status               - Application status (pending/approved/rejected)
+
+================================================================================
+OPENING THE CSV FILE
+================================================================================
+
+Microsoft Excel:
+---------------
+1. Double-click the downloaded CSV file
+2. Excel will open it automatically
+3. Data will be properly formatted in columns
+
+Google Sheets:
+-------------
+1. Go to Google Sheets (sheets.google.com)
+2. Click File → Import
+3. Upload the CSV file
+4. Select "Import data"
+
+LibreOffice Calc:
+----------------
+1. Open LibreOffice Calc
+2. File → Open
+3. Select the CSV file
+4. Choose UTF-8 encoding
+5. Click OK
+
+================================================================================
+USE CASES
+================================================================================
+
+✓ Create backup of all applications
+✓ Analyze data in Excel/Sheets
+✓ Share applicant list with team members
+✓ Import into other systems
+✓ Generate reports and statistics
+✓ Print applicant lists
+✓ Filter and sort data
+✓ Create pivot tables
+
+================================================================================
+TECHNICAL DETAILS
+================================================================================
+
+File Format:    CSV (Comma-Separated Values)
+Encoding:       UTF-8 with BOM (for Excel compatibility)
+Delimiter:      Comma (,)
+Text Qualifier: Double quotes (")
+Line Ending:    CRLF (Windows compatible)
+
+================================================================================
+SECURITY NOTES
+================================================================================
+
+⚠️ IMPORTANT:
+- CSV files contain sensitive student data
+- Only download when necessary
+- Store files securely
+- Delete after use if not needed
+- Do not share publicly
+- Ensure proper access controls
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Problem: CSV file not downloading
+Solution: 
+  - Check if you're logged in as admin
+  - Clear browser cache
+  - Try different browser
+  - Check PHP error logs
+
+Problem: Special characters not displaying correctly
+Solution:
+  - Open with UTF-8 encoding
+  - Use Google Sheets instead of Excel
+  - In Excel: Data → From Text/CSV → UTF-8
+
+Problem: Empty CSV file
+Solution:
+  - Ensure applications exist in database
+  - Check database connection
+  - Verify export_csv.php file exists
+
+Problem: Download blocked by browser
+Solution:
+  - Check browser download settings
+  - Allow downloads from localhost
+  - Disable popup blocker for localhost
+
+================================================================================
+FILE LOCATIONS
+================================================================================
+
+Export Script:  export_csv.php
+Admin Panel:    admin-panel.php
+Database:       scholarship.db
+
+================================================================================
+CUSTOMIZATION
+================================================================================
+
+To modify exported columns:
+1. Open export_csv.php in text editor
+2. Edit the fputcsv() headers array (line 18-30)
+3. Edit the data array (line 33-46)
+4. Save and test
+
+Example - Add new column:
+-------------------------
+In headers array, add:
+  'Guardian Name'
+
+In data array, add:
+  $app['guardian_name']
+
+================================================================================
+AUTOMATION (ADVANCED)
+================================================================================
+
+You can automate CSV exports using cron jobs or scheduled tasks:
+
+Windows Task Scheduler:
+  php export_csv.php > backup_YYYY-MM-DD.csv
+
+Linux Cron:
+  0 0 * * * php /path/to/export_csv.php > /backups/$(date +\%Y-\%m-\%d).csv
+
+================================================================================
+SUPPORT
+================================================================================
+
+For issues or questions:
+- Check admin-panel.php for proper integration
+- Review export_csv.php for export logic
+- Test with sample data first
+- Check PHP error logs
+
+================================================================================
+VERSION INFORMATION
+================================================================================
+
+Feature Added: October 2024
+Version: 1.0
+Compatible with: Nucleon Scholarship System v1.0+
+
+================================================================================

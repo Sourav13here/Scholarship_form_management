@@ -1,0 +1,51 @@
+# Apache Configuration for Nucleon Scholarship System
+
+# Protect database file
+<Files "scholarship.db">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Protect configuration files
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# Enable error pages
+ErrorDocument 404 /BBTS/index.html
+
+# Enable rewrite engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirect to index.html if accessing directory
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^$ index.html [L]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # XSS Protection
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevent MIME sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# PHP Configuration
+<IfModule mod_php7.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value upload_max_filesize 5M
+    php_value post_max_size 5M
+</IfModule>

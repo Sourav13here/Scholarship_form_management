@@ -1,0 +1,337 @@
+================================================================================
+              NUCLEON SCHOLARSHIP SYSTEM - FLOW DIAGRAM
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        SYSTEM ARCHITECTURE                              │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────┐         ┌──────────────┐         ┌──────────────┐
+│   STUDENT    │         │    ADMIN     │         │   DATABASE   │
+│   (Browser)  │         │   (Browser)  │         │  (SQLite)    │
+└──────┬───────┘         └──────┬───────┘         └──────┬───────┘
+       │                        │                        │
+       │                        │                        │
+       ▼                        ▼                        ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          WEB SERVER (PHP)                               │
+│  ┌─────────────┐  ┌──────────────┐  ┌──────────────┐  ┌─────────────┐ │
+│  │  form.html  │  │ admin-panel  │  │   config.php │  │ FPDF Library│ │
+│  │             │  │     .php     │  │              │  │             │ │
+│  └─────┬───────┘  └──────┬───────┘  └──────┬───────┘  └─────┬───────┘ │
+│        │                 │                  │                │         │
+│        ▼                 ▼                  ▼                ▼         │
+│  ┌──────────────────────────────────────────────────────────────────┐  │
+│  │              submit_form.php & download_admit_card.php           │  │
+│  └──────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+================================================================================
+                        STUDENT APPLICATION FLOW
+================================================================================
+
+    START
+      │
+      ▼
+┌─────────────────┐
+│ Student visits  │
+│   form.html     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Fills out form: │
+│ • Name          │
+│ • Class         │
+│ • School        │
+│ • Address       │
+│ • Contact       │
+│ • Email         │
+│ • Achievements  │
+│ • Declaration   │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Clicks Submit   │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ JavaScript validation   │
+│ • Required fields       │
+│ • Email format          │
+│ • Phone pattern         │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ AJAX POST to            │
+│ submit_form.php         │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Server-side validation  │
+│ • Check required fields │
+│ • Validate email        │
+│ • Check phone format    │
+│ • Check duplicate email │
+└────────┬────────────────┘
+         │
+         ├─── FAIL ──→ Return error message
+         │
+         ▼ PASS
+┌─────────────────────────┐
+│ Generate unique ID      │
+│ Format: NCI20240001     │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Insert into database    │
+│ (scholarship.db)        │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Return success JSON     │
+│ with application_id     │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Display success message │
+│ Show application ID     │
+│ Show PDF download link  │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Student clicks          │
+│ "Download Admit Card"   │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ download_admit_card.php │
+│ • Fetch data from DB    │
+│ • Generate PDF (FPDF)   │
+│ • Send to browser       │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ PDF downloaded          │
+│ Application complete!   │
+└─────────────────────────┘
+         │
+         ▼
+       END
+
+
+================================================================================
+                          ADMIN PANEL FLOW
+================================================================================
+
+    START
+      │
+      ▼
+┌─────────────────┐
+│ Admin visits    │
+│ admin-panel.php │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Login screen    │
+│ shown           │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Enter:          │
+│ User: admin     │
+│ Pass: admin123  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Validate        │
+│ credentials     │
+└────────┬────────┘
+         │
+         ├─── FAIL ──→ Show error, retry
+         │
+         ▼ PASS
+┌─────────────────────────┐
+│ Create session          │
+│ Load dashboard          │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Display Statistics:     │
+│ • Total applications    │
+│ • Today's applications  │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Display Applications    │
+│ Table with:             │
+│ • Application ID        │
+│ • Name                  │
+│ • Class                 │
+│ • School                │
+│ • Contact               │
+│ • Email                 │
+│ • Submission date       │
+│ • Download PDF button   │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Admin can:              │
+│ • View all data         │
+│ • Download any PDF      │
+│ • Monitor submissions   │
+│ • Logout                │
+└─────────────────────────┘
+         │
+         ▼
+       END
+
+
+================================================================================
+                        DATABASE STRUCTURE
+================================================================================
+
+┌─────────────────────────────────────────────────────────────┐
+│                    scholarship.db (SQLite)                  │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  TABLE: applications                                        │
+│  ┌──────────────────┬──────────┬────────────────────────┐  │
+│  │ Column           │ Type     │ Constraints            │  │
+│  ├──────────────────┼──────────┼────────────────────────┤  │
+│  │ id               │ INTEGER  │ PRIMARY KEY, AUTO      │  │
+│  │ application_id   │ TEXT     │ UNIQUE, NOT NULL       │  │
+│  │ name             │ TEXT     │ NOT NULL               │  │
+│  │ class            │ TEXT     │ NOT NULL               │  │
+│  │ school           │ TEXT     │ NOT NULL               │  │
+│  │ address          │ TEXT     │ NOT NULL               │  │
+│  │ contact          │ TEXT     │ NOT NULL               │  │
+│  │ alt_contact      │ TEXT     │ OPTIONAL               │  │
+│  │ email            │ TEXT     │ NOT NULL               │  │
+│  │ achievements     │ TEXT     │ OPTIONAL               │  │
+│  │ declaration      │ INTEGER  │ NOT NULL               │  │
+│  │ submission_date  │ DATETIME │ AUTO TIMESTAMP         │  │
+│  │ status           │ TEXT     │ DEFAULT 'pending'      │  │
+│  └──────────────────┴──────────┴────────────────────────┘  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+
+================================================================================
+                        FILE INTERACTIONS
+================================================================================
+
+form.html
+    │
+    ├──→ Submits to: submit_form.php
+    │
+    └──→ Links to: download_admit_card.php?id=X
+
+submit_form.php
+    │
+    ├──→ Requires: config.php
+    │
+    ├──→ Writes to: scholarship.db
+    │
+    └──→ Returns: JSON response
+
+download_admit_card.php
+    │
+    ├──→ Requires: config.php
+    │
+    ├──→ Requires: fpdf/fpdf.php
+    │
+    ├──→ Reads from: scholarship.db
+    │
+    └──→ Outputs: PDF file
+
+admin-panel.php
+    │
+    ├──→ Requires: config.php
+    │
+    ├──→ Reads from: scholarship.db
+    │
+    └──→ Links to: download_admit_card.php?id=X
+
+config.php
+    │
+    ├──→ Creates: scholarship.db
+    │
+    └──→ Provides: getDBConnection()
+
+
+================================================================================
+                        DATA FLOW SUMMARY
+================================================================================
+
+Student Input → Form Validation → Server Validation → Database Storage
+                                                              │
+                                                              ▼
+Admin View ← Database Query ← Admin Login ← Admin Access
+                                                              │
+                                                              ▼
+PDF Generation ← Database Query ← Download Request ← Student/Admin
+
+
+================================================================================
+                        SECURITY LAYERS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 1: Client-side Validation (JavaScript)              │
+│  • Required field checks                                    │
+│  • Email format validation                                  │
+│  • Phone pattern validation                                 │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 2: Server-side Validation (PHP)                     │
+│  • Re-validate all inputs                                   │
+│  • Check data types                                         │
+│  • Prevent duplicate submissions                            │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 3: Database Security (PDO)                          │
+│  • Prepared statements                                      │
+│  • SQL injection prevention                                 │
+│  • Data type enforcement                                    │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 4: File Protection (.htaccess)                      │
+│  • Block direct database access                             │
+│  • Security headers                                         │
+│  • Directory listing prevention                             │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 5: Admin Authentication (Session)                   │
+│  • Login required                                           │
+│  • Session management                                       │
+│  • Logout functionality                                     │
+└─────────────────────────────────────────────────────────────┘
+
+
+================================================================================
