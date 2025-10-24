@@ -30,13 +30,13 @@ try {
     $pdf->SetTextColor(255, 255, 255);
     $pdf->SetFont('Arial', 'B', 20);
     $pdf->Cell(0, 15, '', 0, 1);
-    $pdf->Cell(0, 10, 'Nucleon Coaching Institute, Durgapur', 0, 1, 'C');
+    $pdf->Cell(0, 10, 'Brahma Baba Techno School Scholarship Test', 0, 1, 'C');
     
     $pdf->SetFont('Arial', '', 14);
-    $pdf->Cell(0, 8, 'Scholarship Admit Card', 0, 1, 'C');
+    $pdf->Cell(0, 8, 'Admit Card', 0, 1, 'C');
     
     $pdf->SetFont('Arial', 'I', 10);
-    $pdf->Cell(0, 6, 'In collaboration with Holyflower Senior Secondary School Teok', 0, 1, 'C');
+    $pdf->Cell(0, 6, 'In collaboration with Nucleon Coaching Institute, Durgapur', 0, 1, 'C');
     
     // Reset text color
     $pdf->SetTextColor(0, 0, 0);
@@ -133,7 +133,7 @@ try {
     $pdf->MultiCell(0, 5, '1. Please bring this admit card on the day of the scholarship test.' . "\n" .
                            '2. Carry a valid photo ID proof along with this admit card.' . "\n" .
                            '3. Report to the examination center 30 minutes before the scheduled time.' . "\n" .
-                           '4. For any queries, contact: info@nucleoncoaching.com');
+                           '4. For any queries, contact: ');
     
     // Output PDF
     $pdf->Output('D', 'Admit_Card_' . $application['application_id'] . '.pdf');

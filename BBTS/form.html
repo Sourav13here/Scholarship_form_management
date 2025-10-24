@@ -215,11 +215,11 @@
                 <img src="/images/logo.png" alt="Nucleon Coaching Institute Logo">
             </div>
             
-            <h1>Brahma Baba Techno School Scholarship Exam</h1>
+            <h1>Brahma Baba Techno School Scholarship Test</h1>
             <p>in collaboration with</p>
             <p><b>Nucleon Coaching Institute, Durgapur</b></p>
             <br>
-            <p>This scholarship is for Class X students in collaboration with Holyflower Senior Secondary School Teok, focusing on Science and Math subjects. Please fill out the form carefully.</p>
+            <p>This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.</p>
             <br>
             <hr color="white"><br>
             <h2><b>Scholarship Application Form</b></h2>
@@ -312,8 +312,9 @@
                 if (data.success) {
                     messageDiv.className = 'message success';
                     messageDiv.innerHTML = data.message + '<br><br><a href="download_admit_card.php?id=' + data.application_id + '" style="color: #155724; font-weight: bold;">Download Admit Card (PDF)</a>';
-                    this.reset();
-                    
+                    // Hide the form so only success text and download link are visible
+                    this.style.display = 'none';
+
                     // Scroll to message
                     messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
