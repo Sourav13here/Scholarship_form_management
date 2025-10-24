@@ -1,6 +1,4 @@
-# 🎓 Nucleon Scholarship Application System
-
-A complete web-based scholarship application management system for **Nucleon Coaching Institute, Durgapur** in collaboration with **Holyflower Senior Secondary School Teok**.
+# 🎓 Scholarship Application System
 
 [![PHP Version](https://img.shields.io/badge/PHP-7.0%2B-blue)](https://www.php.net/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
