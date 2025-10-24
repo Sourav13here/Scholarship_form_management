@@ -40,9 +40,9 @@ try {
     $pdf->SetFont('Arial', 'B', 20);
     $pdf->Cell(0, 10, 'Brahma Baba Techno School Scholarship Test', 0, 1, 'C');
     $pdf->SetFont('Arial', '', 14);
-    $pdf->Cell(0, 8, 'Admit Card', 0, 1, 'C');
-    $pdf->SetFont('Arial', 'I', 10);
     $pdf->Cell(0, 6, 'In collaboration with Nucleon Coaching Institute, Durgapur', 0, 1, 'C');
+    $pdf->SetFont('Arial', 'I', 16);
+    $pdf->Cell(0, 10, 'Admit Card', 0, 1, 'C');
     
     // Add some space
     $pdf->Ln(12);
@@ -125,16 +125,7 @@ try {
         $pdf->Cell(0, 8, $application['contact'], 0, 1);
     }
     
-    if (!empty($application['alt_contact'])) {
-        $pdf->SetFont('Arial', 'B', 11);
-        $pdf->Cell(50, 8, 'Alt. Contact:', 0, 0);
-        $pdf->SetFont('Arial', '', 11);
-        if ($detailsWidth > 0) {
-            $pdf->Cell($detailsWidth, 8, $application['alt_contact'], 0, 1);
-        } else {
-            $pdf->Cell(0, 8, $application['alt_contact'], 0, 1);
-        }
-    }
+    
     
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(50, 8, 'Email:', 0, 0);
@@ -159,17 +150,6 @@ try {
     
     $pdf->Ln(5);
     
-    // Achievements
-    if (!empty($application['achievements'])) {
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->SetTextColor(102, 126, 234);
-        $pdf->Cell(0, 10, 'Achievements', 0, 1);
-        $pdf->SetTextColor(0, 0, 0);
-        
-        $pdf->SetFont('Arial', '', 11);
-        $pdf->MultiCell(0, 6, $application['achievements'], 0, 1);
-        $pdf->Ln(3);
-    }
     
     // Submission Date
     $pdf->SetFont('Arial', 'I', 10);
@@ -186,7 +166,7 @@ try {
     $pdf->MultiCell(0, 5, '1. Please bring this admit card on the day of the scholarship test.' . "\n" .
                            '2. Carry a valid photo ID proof along with this admit card.' . "\n" .
                            '3. Report to the examination center 30 minutes before the scheduled time.' . "\n" .
-                           '4. For any queries, contact: ');
+                           '4. For any queries, contact: 9957569868, 9933687725 ');
 
     // Signature Section (right-aligned)
     $pdf->Ln(8);
