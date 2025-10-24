@@ -7,7 +7,7 @@ initializeDatabase();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate required fields
-    $requiredFields = ['name', 'class', 'school', 'address', 'contact', 'email', 'declaration'];
+    $requiredFields = ['name', 'class', 'school', 'address', 'contact', 'declaration'];
     $missingFields = [];
     
     // Create uploads directory if it doesn't exist
@@ -30,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    // Validate email
-    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    // Validate email only if provided (optional field)
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode([
             'success' => false,
             'message' => 'Invalid email address'
@@ -96,15 +97,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $db = getDBConnection();
         
-        // Check if email already exists
-        $checkStmt = $db->prepare("SELECT id FROM applications WHERE email = ?");
-        $checkStmt->execute([$_POST['email']]);
-        if ($checkStmt->fetch()) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'An application with this email already exists'
-            ]);
-            exit;
+        // Check if email already exists (only when provided)
+        if ($email !== '') {
+            $checkStmt = $db->prepare("SELECT id FROM applications WHERE email = ?");
+            $checkStmt->execute([$email]);
+            if ($checkStmt->fetch()) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'An application with this email already exists'
+                ]);
+                exit;
+            }
         }
         
         // Insert application
@@ -123,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_POST['address'],
             $_POST['contact'],
             $_POST['alt_contact'] ?? '',
-            $_POST['email'],
+            $email,
             $photoFileName,
             $_POST['achievements'] ?? '',
             1

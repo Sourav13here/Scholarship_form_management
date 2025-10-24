@@ -40,6 +40,36 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 padding: 0;
                 box-sizing: border-box;
             }
+
+        .alert {
+            margin: 0 0 20px 0;
+            padding: 12px 16px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-left: 4px solid #28a745; }
+        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-left: 4px solid #dc3545; }
+
+        .delete-btn {
+            background: #c62828;
+            color: white;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+        .delete-btn:hover { background: #b71c1c; }
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 background: #0d47a1;
@@ -124,6 +154,11 @@ if (!isset($_SESSION['admin_logged_in'])) {
     </html>
     <?php
     exit;
+}
+
+// Ensure CSRF token exists for admin actions
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 // Get statistics
@@ -276,6 +311,41 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
             background: #1565c0;
         }
 
+        /* Alerts (status banners) */
+        .alert {
+            margin: 0 0 20px 0;
+            padding: 12px 16px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-left: 4px solid #28a745; }
+        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-left: 4px solid #dc3545; }
+
+        /* Delete button styling */
+        button.delete-btn, .delete-btn {
+            background: #c62828;
+            color: white;
+            padding: 8px 14px;
+            border: none !important;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            -webkit-appearance: none;
+            appearance: none;
+            margin-left: 8px;
+        }
+        button.delete-btn:hover, .delete-btn:hover { background: #b71c1c; }
+
         .export-btn {
             background: #217346;
             color: white;
@@ -353,6 +423,13 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
     </div>
 
     <div class="container">
+        <?php if (isset($_GET['status'])): ?>
+            <?php if ($_GET['status'] === 'deleted'): ?>
+                <div class="alert alert-success">Application deleted successfully.</div>
+            <?php elseif ($_GET['status'] === 'error'): ?>
+                <div class="alert alert-error">Failed to delete application. Please try again.</div>
+            <?php endif; ?>
+        <?php endif; ?>
         <div class="stats-grid">
             <div class="stat-card">
                 <h3>Total Applications</h3>
@@ -396,6 +473,11 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
                             <td><?php echo date('d-M-Y H:i', strtotime($app['submission_date'])); ?></td>
                             <td>
                                 <a href="download_admit_card.php?id=<?php echo $app['id']; ?>" class="download-btn">Download PDF</a>
+                                <form method="POST" action="delete_application.php" style="display:inline-block; margin-left:8px;" onsubmit="return confirm('Are you sure you want to delete this application? This action cannot be undone.');">
+                                    <input type="hidden" name="id" value="<?php echo (int)$app['id']; ?>">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                                    <button type="submit" class="delete-btn">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>

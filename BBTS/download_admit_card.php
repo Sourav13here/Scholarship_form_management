@@ -24,7 +24,7 @@ try {
     
     // Top logos (no colored header)
     $pdf->SetTextColor(0, 0, 0);
-    $logoLeft = __DIR__ . '/images/bbtLogo.png';
+    $logoLeft = __DIR__ . '/images/bbtlogo.png';
     $logoRight = __DIR__ . '/images/logo.png';
     if (file_exists($logoLeft)) {
         // x=30mm, y=10mm, width=25mm (height auto)

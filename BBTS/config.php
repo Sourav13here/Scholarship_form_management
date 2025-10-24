@@ -27,7 +27,7 @@ function initializeDatabase() {
         address TEXT NOT NULL,
         contact TEXT NOT NULL,
         alt_contact TEXT,
-        email TEXT NOT NULL,
+        email TEXT,
         photo TEXT,
         achievements TEXT,
         declaration INTEGER NOT NULL,
@@ -49,21 +49,62 @@ function migrateDatabase() {
     $db = getDBConnection();
     
     try {
-        // Check if photo column exists
+        // Inspect current schema
         $result = $db->query("PRAGMA table_info(applications)");
         $columns = $result->fetchAll(PDO::FETCH_ASSOC);
         $hasPhotoColumn = false;
-        
+        $emailNotNull = false;
+
         foreach ($columns as $column) {
             if ($column['name'] === 'photo') {
                 $hasPhotoColumn = true;
-                break;
+            }
+            if ($column['name'] === 'email' && (int)$column['notnull'] === 1) {
+                $emailNotNull = true;
             }
         }
-        
+
         // Add photo column if it doesn't exist
         if (!$hasPhotoColumn) {
             $db->exec("ALTER TABLE applications ADD COLUMN photo TEXT");
+        }
+
+        // If email is NOT NULL, recreate table with email nullable
+        if ($emailNotNull) {
+            $db->beginTransaction();
+            try {
+                // Create new table with desired schema
+                $db->exec("CREATE TABLE IF NOT EXISTS applications_new (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    application_id TEXT UNIQUE NOT NULL,
+                    name TEXT NOT NULL,
+                    class TEXT NOT NULL,
+                    school TEXT NOT NULL,
+                    address TEXT NOT NULL,
+                    contact TEXT NOT NULL,
+                    alt_contact TEXT,
+                    email TEXT,
+                    photo TEXT,
+                    achievements TEXT,
+                    declaration INTEGER NOT NULL,
+                    submission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    status TEXT DEFAULT 'pending'
+                )");
+
+                // Copy data
+                $db->exec("INSERT INTO applications_new (
+                    id, application_id, name, class, school, address, contact, alt_contact, email, photo, achievements, declaration, submission_date, status
+                ) SELECT id, application_id, name, class, school, address, contact, alt_contact, email, photo, achievements, declaration, submission_date, status FROM applications");
+
+                // Replace old table
+                $db->exec("DROP TABLE applications");
+                $db->exec("ALTER TABLE applications_new RENAME TO applications");
+
+                $db->commit();
+            } catch (PDOException $e) {
+                $db->rollBack();
+                throw $e;
+            }
         }
         
         return true;
