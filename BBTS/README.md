@@ -1,6 +1,5 @@
-# Nucleon Scholarship Application System
+# Scholarship Application System
 
-A complete web-based scholarship application system for Nucleon Coaching Institute, Durgapur.
 
 ## Features
 
