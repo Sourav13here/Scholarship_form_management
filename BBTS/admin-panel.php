@@ -10,6 +10,9 @@ $ADMIN_PASSWORD = 'admin123'; // Change this!
 if (isset($_POST['login'])) {
     if ($_POST['username'] === $ADMIN_USERNAME && $_POST['password'] === $ADMIN_PASSWORD) {
         $_SESSION['admin_logged_in'] = true;
+        // Redirect to avoid form resubmission on refresh (PRG pattern)
+        header('Location: admin-panel.php');
+        exit;
     } else {
         $loginError = 'Invalid credentials';
     }
@@ -30,7 +33,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Login - Nucleon Scholarship</title>
+        <title>Admin Login - BBTS Scholarship Test</title>
         <style>
             * {
                 margin: 0;
@@ -136,7 +139,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Nucleon Scholarship</title>
+    <title>Admin Panel - BBTS Scholarship Test</title>
     <style>
         * {
             margin: 0;
