@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holy Flower Senior Secondary School - Scholarship Test Application Form</title>
+    <title>Holy Flower Sr. Sec. School - Scholarship Test Application Form</title>
     <meta name="description" content="This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.">
     <style>
         * {
@@ -70,6 +70,42 @@
             font-size: 14px;
             line-height: 1.6;
             opacity: 0.95;
+        }
+
+        /* Header action buttons */
+        .action-buttons {
+            display: inline-flex;
+            gap: 12px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+        .action-btn {
+            background: #ffffff;
+            color: #0d47a1;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: transform 0.08s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+            display: inline-block;
+            border: 1px solid rgba(13,71,161,0.25);
+        }
+        .action-btn:hover { background: #f6fbff; color: #0b3e8f; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+        .action-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(25,118,210,0.35), 0 3px 10px rgba(0,0,0,0.15); }
+        .action-btn.secondary { background: #ffffff; color: #0d47a1; border-color: rgba(13,71,161,0.25); }
+        .action-btn.secondary:hover { background: #f6fbff; color: #0b3e8f; }
+        @media (max-width: 520px) {
+            .action-buttons { flex-direction: column; }
+            .action-btn { width: 100%; text-align: center; }
+        }
+
+        /* HR spacing within header */
+        .header hr {
+            height: 1px;
+            border: 0;
+            background: rgba(255,255,255,0.8);
+            margin: 20px 0 26px;
         }
 
         .form-content {
@@ -186,6 +222,18 @@
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
+        }
+
+        /* Temporary field highlight */
+        .field-error {
+            border-color: #e53935 !important;
+            box-shadow: 0 0 0 3px rgba(229,57,53,0.18) !important;
+            animation: pulseError 0.8s ease-in-out 2;
+        }
+        @keyframes pulseError {
+            0% { box-shadow: 0 0 0 0 rgba(229,57,53,0.28); }
+            50% { box-shadow: 0 0 0 6px rgba(229,57,53,0.12); }
+            100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.0); }
         }
 
         .photo-upload-container {
@@ -305,15 +353,19 @@
         <div class="header">
             <div class="logo-bar">
                 
-                <img src="/HFSSS/images/hfssslogo.png">
-                <img src="/HFSSS/images/logo.png" alt="Nucleon Coaching Institute Logo">
+                <img src="/scholarship/HFSSS/images/bbtlogo.png">
+                <img src="/scholarship/HFSSS/images/logo.png" alt="Nucleon Coaching Institute Logo">
             </div>
             
-            <h1>Holy Flower Senior Secondary School Scholarship Test</h1>
+            <h1>Holy Flower Sr. Sec. School Scholarship Test</h1>
             <p>in collaboration with</p>
             <p><b>Nucleon Coaching Institute, Durgapur</b></p>
             <br>
             <p>This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.</p>
+            <div class="action-buttons">
+                <a class="action-btn" href="https://holyflowerschool.com/" target="_blank" rel="noopener">Visit School Website</a>
+                <!-- <a class="action-btn secondary" href="/scholarship/HFSSS/images/details.pdf" target="_blank" rel="noopener">Test Details</a> -->
+            </div>
             <br>
             <hr color="white"><br>
             <h2><b>Scholarship Application Form</b></h2>
@@ -352,7 +404,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="alt_contact">6. Alternative Number:</label>
+                    <label for="alt_contact">6. WhatsApp Number:</label>
                     <input type="tel" id="alt_contact" name="alt_contact" pattern="[0-9]{10}">
                 </div>
 
@@ -487,6 +539,18 @@
                     messageDiv.className = 'message error';
                     messageDiv.textContent = data.message;
                     if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+
+                    // If duplicate contact error, alert and focus + highlight the contact field
+                    if (typeof data.message === 'string' && data.message.toLowerCase().includes('contact number')) {
+                        try { alert(data.message); } catch (e) {}
+                        const contactInput = document.getElementById('contact');
+                        if (contactInput) {
+                            contactInput.focus();
+                            contactInput.classList.add('field-error');
+                            contactInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => contactInput.classList.remove('field-error'), 1800);
+                        }
+                    }
                 }
             })
             .catch(error => {

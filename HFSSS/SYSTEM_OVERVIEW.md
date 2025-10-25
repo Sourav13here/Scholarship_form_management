@@ -181,7 +181,7 @@ A complete web-based scholarship application management system for **Nucleon Coa
 
 ### Option 1: Fastest Setup
 ```bash
-cd "s:\growtez\1.2 Nucleon Scholarship\HFSSS"
+cd "s:\growtez\1.2 Nucleon Scholarship\BBTS"
 php test_system.php          # Test the system
 php install_fpdf.php         # Install FPDF
 php -S localhost:8000        # Start server
@@ -190,15 +190,15 @@ Then open: `http://localhost:8000/index.html`
 
 ### Option 2: Using Composer
 ```bash
-cd "s:\growtez\1.2 Nucleon Scholarship\HFSSS"
+cd "s:\growtez\1.2 Nucleon Scholarship\BBTS"
 composer install             # Install dependencies
 php -S localhost:8000        # Start server
 ```
 
 ### Option 3: Using XAMPP/WAMP
-1. Copy HFSSS folder to `htdocs/` or `www/`
+1. Copy BBTS folder to `htdocs/` or `www/`
 2. Start Apache
-3. Visit `http://localhost/HFSSS/`
+3. Visit `http://localhost/BBTS/`
 
 ---
 

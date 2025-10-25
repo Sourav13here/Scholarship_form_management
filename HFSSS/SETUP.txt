@@ -10,7 +10,7 @@ STEP 1: INSTALL FPDF LIBRARY (REQUIRED FOR PDF GENERATION)
 
 Option A - Automatic Installation (Recommended):
 -------------------------------------------------
-1. Open Command Prompt/Terminal in the HFSSS folder
+1. Open Command Prompt/Terminal in the BBTS folder
 2. Run: php install_fpdf.php
 3. Wait for installation to complete
 
@@ -19,7 +19,7 @@ Option B - Manual Installation:
 1. Visit: http://www.fpdf.org/
 2. Download FPDF (version 1.85 or later)
 3. Extract the ZIP file
-4. Copy fpdf.php to: HFSSS/fpdf/fpdf.php
+4. Copy fpdf.php to: BBTS/fpdf/fpdf.php
 
 Option C - Using Composer:
 ---------------------------
@@ -32,21 +32,21 @@ STEP 2: START WEB SERVER
 
 Option A - PHP Built-in Server (Easiest):
 ------------------------------------------
-1. Open Command Prompt in HFSSS folder
+1. Open Command Prompt in BBTS folder
 2. Run: php -S localhost:8000
 3. Open browser: http://localhost:8000/form.html
 
 Option B - XAMPP:
 -----------------
-1. Copy HFSSS folder to: C:\xampp\htdocs\
+1. Copy BBTS folder to: C:\xampp\htdocs\
 2. Start Apache in XAMPP Control Panel
-3. Open browser: http://localhost/HFSSS/form.html
+3. Open browser: http://localhost/BBTS/form.html
 
 Option C - WAMP:
 ----------------
-1. Copy HFSSS folder to: C:\wamp64\www\
+1. Copy BBTS folder to: C:\wamp64\www\
 2. Start WAMP server
-3. Open browser: http://localhost/HFSSS/form.html
+3. Open browser: http://localhost/BBTS/form.html
 
 ================================================================================
 STEP 3: VERIFY INSTALLATION
@@ -75,7 +75,7 @@ STEP 4: CONFIGURE ADMIN CREDENTIALS (IMPORTANT!)
 FILE STRUCTURE
 ================================================================================
 
-HFSSS/
+BBTS/
 ├── form.html                  - Student application form
 ├── submit_form.php            - Handles form submission
 ├── download_admit_card.php    - Generates PDF admit cards

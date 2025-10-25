@@ -13,7 +13,7 @@
 ## Files Structure
 
 ```
-HFSSS/
+BBTS/
 ├── form.html              - Student application form
 ├── submit_form.php        - Form submission handler
 ├── download_admit_card.php - PDF generation
@@ -43,13 +43,13 @@ composer require setasign/fpdf
 ### 2. Set Up Web Server
 
 #### Option A: Using XAMPP/WAMP
-1. Copy the `HFSSS` folder to `htdocs/` (XAMPP) or `www/` (WAMP)
+1. Copy the `BBTS` folder to `htdocs/` (XAMPP) or `www/` (WAMP)
 2. Start Apache server
-3. Access: `http://localhost/HFSSS/form.html`
+3. Access: `http://localhost/BBTS/form.html`
 
 #### Option B: Using PHP Built-in Server
 ```bash
-cd "s:\growtez\1.2 Nucleon Scholarship\HFSSS"
+cd "s:\growtez\1.2 Nucleon Scholarship\BBTS"
 php -S localhost:8000
 ```
 Then access: `http://localhost:8000/form.html`
@@ -58,13 +58,13 @@ Then access: `http://localhost:8000/form.html`
 
 Ensure the web server has write permissions for:
 - `scholarship.db` (will be auto-created)
-- The HFSSS directory
+- The BBTS directory
 
 On Windows, this is usually automatic.
 On Linux/Mac:
 ```bash
-chmod 755 HFSSS/
-chmod 666 HFSSS/scholarship.db
+chmod 755 BBTS/
+chmod 666 BBTS/scholarship.db
 ```
 
 ## Usage
@@ -119,7 +119,7 @@ chmod 666 HFSSS/scholarship.db
    - Consider using password hashing (bcrypt)
 
 2. **Add .htaccess Protection**
-   Create `.htaccess` in HFSSS folder:
+   Create `.htaccess` in BBTS folder:
    ```apache
    # Protect database file
    <Files "scholarship.db">

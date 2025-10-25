@@ -16,7 +16,7 @@
 Options -Indexes
 
 # Enable error pages
-ErrorDocument 404 /HFSSS/index.html
+ErrorDocument 404 /BBTS/index.html
 
 # Enable rewrite engine
 <IfModule mod_rewrite.c>

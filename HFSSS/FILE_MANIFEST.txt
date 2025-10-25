@@ -2,7 +2,7 @@
           NUCLEON SCHOLARSHIP SYSTEM - COMPLETE FILE MANIFEST
 ================================================================================
 
-📁 Project Location: s:\growtez\1.2 Nucleon Scholarship\HFSSS\
+📁 Project Location: s:\growtez\1.2 Nucleon Scholarship\BBTS\
 
 ================================================================================
                         CORE APPLICATION FILES
@@ -335,7 +335,7 @@ Files: 644 (rw-r--r--)
    - All .md files
 
 Directories: 755 (rwxr-xr-x)
-   - HFSSS/
+   - BBTS/
    - fpdf/
 
 Database: 666 (rw-rw-rw-)
