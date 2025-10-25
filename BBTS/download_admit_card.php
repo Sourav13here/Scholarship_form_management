@@ -219,13 +219,7 @@ try {
     $pdf->SetXY($xLeft + $labelW, $y); $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW - $labelW, $rowH, '2 hours', 0, 'L');
     $pdf->SetY(max($yAfterLabel, $pdf->GetY()));
 
-    // Contact number
-    $y = $pdf->GetY();
-    $pdf->SetX($xLeft); $pdf->SetFont('Arial', 'B', 12); $pdf->MultiCell($labelW, $rowH, 'Contact number:', 0, 'L');
-    $yAfterLabel = $pdf->GetY();
-    $pdf->SetXY($xLeft + $labelW, $y); $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW - $labelW, $rowH, '6003214405, 9101458652', 0, 'L');
-    $pdf->SetY(max($yAfterLabel, $pdf->GetY()));
-    $pdf->Ln(2);
+    
 
     // Submission Date (keep on page 1)
     $pdf->SetFont('Arial', 'I', 12);
@@ -310,24 +304,92 @@ try {
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFont('Arial', '', 12);
     $pdf->Ln(2);
+    // 1. Arrival
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '1. Arrival', 0, 1);
+    $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW, 6, 'Arrive 30 minutes early for check-in and seating.'); $pdf->Ln(1);
+
+    // 2. Identification
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '2. Identification', 0, 1);
+    $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW, 6, 'Carry this Admit Card and a valid photo ID (Aadhar/School ID/Passport). No entry without ID.'); $pdf->Ln(1);
+
+    // 3. Permitted Items
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '3. Permitted Items', 0, 1);
+    $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW, 6, ' Admit Card, Valid Photo ID, Ballpoint Pen (Blue/Black), Transparent Water Bottle.'); $pdf->Ln(1);
+
+    // 4. Prohibited Items
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '4. Prohibited Items', 0, 1);
+    $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW, 6, ' Electronic devices, study materials, bags/purses/backpacks.'); $pdf->Ln(1);
+
+    // 5. Exam Format
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '5. Exam Format', 0, 1);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->MultiCell($contentW, 6, 'MCQs + Descriptive from Mathematics & Science. Both subjects have equal weightage.');
+    $pdf->MultiCell($contentW, 6, 'Duration: 120 Minutes');
+    $pdf->Ln(2);
+
+    // Exam Format Table (2 rows, 7 equal-width columns)
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->SetDrawColor(200, 200, 200);
+    $pdf->SetFillColor(245, 245, 245);
+    // Equal column widths summing to 190mm
+    $colW = [27, 27, 27, 27, 27, 27, 28];
+    $headers = ['Section', 'Type', 'Total Questions', 'Marks per Question', 'Negative Marking', 'Total Marks', 'Duration'];
+    // Header row with synchronized height
+    $yHeader = $pdf->GetY();
+    $x = $xLeft;
+    $headerBottoms = [];
+    $xPositions = [];
+    for ($i = 0; $i < count($headers); $i++) {
+        $pdf->SetXY($x, $yHeader);
+        $pdf->SetFont('Arial', 'B', 12);
+        // Draw text without borders to avoid inner boxes
+        $pdf->MultiCell($colW[$i], 6, $headers[$i], 0, 'C', true);
+        $headerBottoms[$i] = $pdf->GetY();
+        $xPositions[$i] = $x;
+        $x += $colW[$i];
+    }
+    $yHeaderMax = max($headerBottoms);
+    // Draw a single rectangle per header cell for the full height
+    for ($i = 0; $i < count($headers); $i++) {
+        $pdf->Rect($xPositions[$i], $yHeader, $colW[$i], $yHeaderMax - $yHeader, 'D');
+    }
+    $pdf->SetY($yHeaderMax);
+
+    // Data row with wrapping per column and synchronized height
+    $pdf->SetFont('Arial', '', 12);
+    $row = ['Mathematics & Science', 'MCQs + Descriptive', '60 (MCQs)', '+4', '-1', '240', '120 Minutes'];
+    $yRow = $pdf->GetY();
+    $x = $xLeft; // align with left margin
+    $rowBottoms = [];
+    $rowX = [];
+    for ($i = 0; $i < count($row); $i++) {
+        $pdf->SetXY($x, $yRow);
+        // Draw text without borders
+        $pdf->MultiCell($colW[$i], 6, $row[$i], 0, 'C');
+        $rowBottoms[$i] = $pdf->GetY();
+        $rowX[$i] = $x;
+        $x += $colW[$i];
+    }
+    $yRowMax = max($rowBottoms);
+    // Draw a single rectangle per data cell for the full height
+    for ($i = 0; $i < count($row); $i++) {
+        $pdf->Rect($rowX[$i], $yRow, $colW[$i], $yRowMax - $yRow, 'D');
+    }
+    $pdf->SetY($yRowMax);
+    $pdf->Ln(6);
+
+    // Continue with remaining sections
+    $pdf->SetFont('Arial', '', 12);
     $pdf->MultiCell($contentW, 6,
-        '1. Arrival:' . "\n" .
-        '- Arrive at least 30 minutes before the scheduled exam time to allow for check-in and seating.' . "\n\n" .
-        '2. Identification:' . "\n" .
-        '- Bring this admit card along with a valid photo ID proof (Aadhar Card, School ID, Passport, etc.) for verification purposes.' . "\n\n" .
-        '3. Materials Allowed:' . "\n" .
-        '- Only the following items are permitted in the examination hall:' . "\n" .
-        '  - Admit Card' . "\n" .
-        '  - Valid Photo ID' . "\n" .
-        '  - Blue/Black ballpoint pen' . "\n" .
-        '  - Transparent water bottle' . "\n\n" .
-        '4. Prohibited Items:' . "\n" .
-        '- The following items are strictly prohibited in the examination hall:' . "\n" .
-        '  - Electronic devices (mobile phones, smartwatches, tablets, etc.)' . "\n" .
-        '  - Study materials (books, notes, etc.)' . "\n" .
-        '  - Bags or backpacks' . "\n\n" .
-        '5. Exam Format:' . "\n" .
-        '- The exam will consist of multiple-choice questions and descriptive questions covering Mathematics & Science.'
+        '6. Conduct' . "\n" .
+        'Maintain silence and follow invigilators instructions. Cheating leads to disqualification.' . "\n\n" .
+        '7. Completion of Exam' . "\n" .
+        'Review answers and wait for permission before leaving.' . "\n\n" .
+        '8. Post-Exam' . "\n" .
+        'Results on 15th December, 2025 on the BBTS Centre website; also via email/WhatsApp.' . "\n\n" .
+        'For any queries or assistance, please contact:' . "\n" .
+        ' Phone: 6003214405, 9101458652' . "\n" .
+        ' Email: me.dibyendu92@gmail.com'
     );
 
     // (Submission date intentionally omitted on second page)

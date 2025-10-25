@@ -224,6 +224,18 @@
             border: 1px solid #f5c6cb;
         }
 
+        /* Temporary field highlight */
+        .field-error {
+            border-color: #e53935 !important;
+            box-shadow: 0 0 0 3px rgba(229,57,53,0.18) !important;
+            animation: pulseError 0.8s ease-in-out 2;
+        }
+        @keyframes pulseError {
+            0% { box-shadow: 0 0 0 0 rgba(229,57,53,0.28); }
+            50% { box-shadow: 0 0 0 6px rgba(229,57,53,0.12); }
+            100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.0); }
+        }
+
         .photo-upload-container {
             display: flex;
             gap: 20px;
@@ -527,6 +539,18 @@
                     messageDiv.className = 'message error';
                     messageDiv.textContent = data.message;
                     if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+
+                    // If duplicate contact error, alert and focus + highlight the contact field
+                    if (typeof data.message === 'string' && data.message.toLowerCase().includes('contact number')) {
+                        try { alert(data.message); } catch (e) {}
+                        const contactInput = document.getElementById('contact');
+                        if (contactInput) {
+                            contactInput.focus();
+                            contactInput.classList.add('field-error');
+                            contactInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => contactInput.classList.remove('field-error'), 1800);
+                        }
+                    }
                 }
             })
             .catch(error => {
