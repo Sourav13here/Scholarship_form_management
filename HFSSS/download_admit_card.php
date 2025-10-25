@@ -47,6 +47,7 @@ try {
     $textW = ($rightX - $textPad) - $textX; // width between logos
     $pdf->SetXY($textX, $logoY + 3);
     $pdf->SetFont('Arial', 'B', 14);
+
     $pdf->Cell($textW, 6, 'Holy Flower Sr. Sec. School Scholarship Test', 0, 2, 'C');
     $pdf->SetFont('Arial', '', 12);
     $pdf->Cell($textW, 6, 'In collaboration with Nucleon Coaching Institute, Durgapur', 0, 2, 'C');
