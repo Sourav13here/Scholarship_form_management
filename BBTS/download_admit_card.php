@@ -227,21 +227,7 @@ try {
     $pdf->SetY(max($yAfterLabel, $pdf->GetY()));
     $pdf->Ln(2);
 
-    // Important Instructions
-    $pdf->SetX($xLeft);
-    $pdf->SetFont('Arial', 'B', 12);
-    $pdf->SetTextColor(102, 126, 234);
-    $pdf->Cell($contentW, 6, 'Important Instructions', 0, 1);
-    $pdf->SetTextColor(0, 0, 0);
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->MultiCell($contentW, 6,
-        '1. Please bring this admit card on the day of the scholarship test.' . "\n" .
-        '2. Carry a valid photo ID proof along with this admit card.' . "\n" .
-        '3. Report to the examination center 30 minutes before the scheduled time.' . "\n" .
-        '4. For any queries, contact: 6003214405, 9101458652 '
-    );
-
-    // Submission Date
+    // Submission Date (keep on page 1)
     $pdf->SetFont('Arial', 'I', 12);
     $pdf->Cell(0, 6, 'Submitted on: ' . date('d-M-Y', strtotime($application['submission_date'])), 0, 1);
     $pdf->Ln(4);
@@ -310,6 +296,43 @@ try {
         $rightBottom = $pdf->GetY();
     }
 
+
+    // Move cursor below the lower of the two blocks
+    $pdf->SetY(max($leftBottom, $rightBottom) + 4);
+
+    // Important Instructions moved to new page
+    $pdf->AddPage();
+    $xLeft = 10; $contentW = 190;
+    $pdf->SetX($xLeft);
+    $pdf->SetFont('Arial', 'B', 14);
+    $pdf->SetTextColor(102, 126, 234);
+    $pdf->Cell($contentW, 8, 'Instructions for Candidates', 0, 1);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Ln(2);
+    $pdf->MultiCell($contentW, 6,
+        '1. Arrival:' . "\n" .
+        '- Arrive at least 30 minutes before the scheduled exam time to allow for check-in and seating.' . "\n\n" .
+        '2. Identification:' . "\n" .
+        '- Bring this admit card along with a valid photo ID proof (Aadhar Card, School ID, Passport, etc.) for verification purposes.' . "\n\n" .
+        '3. Materials Allowed:' . "\n" .
+        '- Only the following items are permitted in the examination hall:' . "\n" .
+        '  - Admit Card' . "\n" .
+        '  - Valid Photo ID' . "\n" .
+        '  - Blue/Black ballpoint pen' . "\n" .
+        '  - Transparent water bottle' . "\n\n" .
+        '4. Prohibited Items:' . "\n" .
+        '- The following items are strictly prohibited in the examination hall:' . "\n" .
+        '  - Electronic devices (mobile phones, smartwatches, tablets, etc.)' . "\n" .
+        '  - Study materials (books, notes, etc.)' . "\n" .
+        '  - Bags or backpacks' . "\n\n" .
+        '5. Exam Format:' . "\n" .
+        '- The exam will consist of multiple-choice questions and descriptive questions covering Mathematics & Science.'
+    );
+
+    // (Submission date intentionally omitted on second page)
+
+    
     // Move cursor below the lower of the two blocks
     $pdf->SetY(max($leftBottom, $rightBottom) + 4);
     
