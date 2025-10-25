@@ -379,18 +379,20 @@ try {
     $pdf->Ln(6);
 
     // Continue with remaining sections
+    // 6. Conduct
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '6. Conduct', 0, 1);
+    $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW, 6, 'Maintain silence and follow invigilators instructions. Cheating leads to disqualification.'); $pdf->Ln(1);
+
+    // 7. Completion of Exam
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '7. Completion of Exam', 0, 1);
+    $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW, 6, 'Review answers and wait for permission before leaving.'); $pdf->Ln(1);
+
+    // 8. Post-Exam
+    $pdf->SetFont('Arial', 'B', 12); $pdf->Cell($contentW, 6, '8. Post-Exam', 0, 1);
     $pdf->SetFont('Arial', '', 12);
-    $pdf->MultiCell($contentW, 6,
-        '6. Conduct' . "\n" .
-        'Maintain silence and follow invigilators instructions. Cheating leads to disqualification.' . "\n\n" .
-        '7. Completion of Exam' . "\n" .
-        'Review answers and wait for permission before leaving.' . "\n\n" .
-        '8. Post-Exam' . "\n" .
-        'Results on 15th December, 2025 on the BBTS Centre website; also via email/WhatsApp.' . "\n\n" .
-        'For any queries or assistance, please contact:' . "\n" .
-        ' Phone: 6003214405, 9101458652' . "\n" .
-        ' Email: me.dibyendu92@gmail.com'
-    );
+    $pdf->MultiCell($contentW, 6, 'Results on 15th December, 2025 on the BBTS Centre website; also via email/WhatsApp.');
+    $pdf->Ln(1);
+    $pdf->MultiCell($contentW, 6, "For any queries or assistance, please contact:\n Phone: 6003214405, 9101458652\n Email: me.dibyendu92@gmail.com");
 
     // (Submission date intentionally omitted on second page)
 
