@@ -78,8 +78,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    // Generate unique application ID
-    $applicationId = 'NCI' . date('Y') . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+    // Generate sequential application ID: NCI + YYYY + 4-digit counter (0001...)
+    $year = date('Y');
+    $prefix = 'HFS' . $year;
+    $db = getDBConnection();
+    $db->beginTransaction();
+    try {
+        $stmtSeq = $db->prepare("SELECT MAX(CAST(SUBSTR(application_id, -4) AS INTEGER)) AS last_seq FROM applications WHERE application_id LIKE ?");
+        $stmtSeq->execute([$prefix . '%']);
+        $rowSeq = $stmtSeq->fetch(PDO::FETCH_ASSOC);
+        $lastSeq = isset($rowSeq['last_seq']) ? (int)$rowSeq['last_seq'] : 0;
+        $nextSeq = $lastSeq + 1;
+        if ($nextSeq > 9999) { throw new Exception('Application sequence limit reached for year ' . $year); }
+        $applicationId = $prefix . str_pad((string)$nextSeq, 4, '0', STR_PAD_LEFT);
+    } catch (Exception $e) {
+        $db->rollBack();
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to generate application ID: ' . $e->getMessage()
+        ]);
+        exit;
+    }
     
     // Handle photo upload
     $photoExtension = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
@@ -95,7 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     try {
-        $db = getDBConnection();
         
         // Check if email already exists (only when provided)
         if ($email !== '') {
@@ -106,8 +124,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'success' => false,
                     'message' => 'An application with this email already exists'
                 ]);
+                $db->rollBack();
                 exit;
             }
+        }
+
+        // Enforce unique contact number
+        $checkContact = $db->prepare("SELECT id FROM applications WHERE contact = ?");
+        $checkContact->execute([$_POST['contact']]);
+        if ($checkContact->fetch()) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'An application with this contact number already exists'
+            ]);
+            $db->rollBack();
+            exit;
         }
         
         // Insert application
@@ -133,6 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         
         $insertedId = $db->lastInsertId();
+        $db->commit();
         
         echo json_encode([
             'success' => true,
@@ -141,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         
     } catch(PDOException $e) {
+        if ($db->inTransaction()) { $db->rollBack(); }
         echo json_encode([
             'success' => false,
             'message' => 'Database error: ' . $e->getMessage()

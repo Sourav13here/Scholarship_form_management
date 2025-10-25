@@ -33,7 +33,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Login - HFSSS Scholarship Test</title>
+        <title>Admin Login - BBTS Scholarship Test</title>
         <style>
             * {
                 margin: 0;
@@ -174,7 +174,7 @@ $applications = $db->query("SELECT * FROM applications ORDER BY submission_date 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - HFSSS Scholarship Test</title>
+    <title>Admin Panel - BBTS Scholarship Test</title>
     <style>
         * {
             margin: 0;
