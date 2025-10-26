@@ -27,8 +27,8 @@ try {
     
     // Top logos near edges and combined heading between them
     $pdf->SetTextColor(0, 0, 0);
-    $logoLeft = __DIR__ . '/images/hflogo.png';
-    $logoRight = __DIR__ . '/images/logo.png';
+    $logoLeft = __DIR__ . '/images/logo.png';
+    $logoRight = __DIR__ . '/images/hflogo.png';
     $edgeMargin = 10; // page margins
     $logoW = 24; // logo width
     $logoY = 10; // top y for logos
@@ -48,9 +48,9 @@ try {
     $pdf->SetXY($textX, $logoY + 3);
     $pdf->SetFont('Arial', 'B', 14);
 
-    $pdf->Cell($textW, 6, 'Holy Flower Sr. Sec. School Scholarship Test', 0, 2, 'C');
+    $pdf->Cell($textW, 6, 'Nucleon Coaching Institute Scholarship Test', 0, 2, 'C');
     $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell($textW, 6, 'In collaboration with Nucleon Coaching Institute, Durgapur', 0, 2, 'C');
+    $pdf->Cell($textW, 6, 'In collaboration with Holy Flower Sr. Sec. School, Teok', 0, 2, 'C');
 
     // Move below the header band and print Admit Card line
     $pdf->SetY(max($logoY + $logoW + 4, $pdf->GetY() + 4));
@@ -234,39 +234,13 @@ try {
     $signH = 16; // fixed height to standardize alignment
     $captionY = $yStart + $signH + 2; // place caption ~2mm below the image bottom
 
-    // Left: Principal ()
-    $signPath2 = __DIR__ . '/images/sign2.png';
-    $leftX = 14; // add left margin for left signature
-    $leftBottom = $yStart;
-    if (file_exists($signPath2)) {
-        $pdf->Image($signPath2, $leftX, $yStart, $signW, $signH);
-        $pdf->SetY($captionY);
-        $pdf->SetX($leftX);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('Arial', 'B', 11);
-        $pdf->Cell($signW, 6, 'Principal', 0, 1, 'C');
-        $pdf->SetX($leftX);
-        $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell($signW, 5, 'Holy Flower Sr. Sec. School, Teok', 0, 1, 'C');
-        $leftBottom = $captionY + 11; // 6 + 5 lines
-    } else {
-        // Fallback text if image missing
-        $pdf->SetY($yStart + 12);
-        $pdf->SetX($leftX);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->SetFont('Arial', 'B', 11);
-        $pdf->Cell($signW, 6, 'Principal', 0, 1, 'C');
-        $pdf->SetX($leftX);
-        $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell($signW, 5, 'Holy Flower Sr. Sec. School, Teok', 0, 1, 'C');
-        $leftBottom = $pdf->GetY();
-    }
+    $leftBottom = $yStart; // Keep variable for SetY
 
-    // Right: Director (Nucleon)
+    // Right-aligned Director Signature
     $signPath = __DIR__ . '/images/sign.png';
-    $rightMargin = 10; // default margin
     $pageWidth = 210; // A4 width
-    $rightX = $pageWidth - $rightMargin - $signW - 4; // add right margin for right signature
+    $rightMargin = 10;
+    $rightX = $pageWidth - $rightMargin - $signW - 4; // Add extra 4mm margin
     $rightBottom = $yStart;
     if (file_exists($signPath)) {
         $pdf->Image($signPath, $rightX, $yStart, $signW, $signH);
@@ -395,15 +369,8 @@ try {
     $pdf->Ln(1);
     $pdf->MultiCell($contentW, 6, "For any queries or assistance, please contact:\n Phone: 6003214405, 9101458652\n Email: me.dibyendu92@gmail.com");
 
-    // (Submission date intentionally omitted on second page)
-
-    
-    // Move cursor below the lower of the two blocks
-    $pdf->SetY(max($leftBottom, $rightBottom) + 4);
-    
     // Output PDF
     $pdf->Output('D', 'Admit_Card_' . $application['application_id'] . '.pdf');
-    
 } catch(PDOException $e) {
     die('Database error: ' . $e->getMessage());
 }
