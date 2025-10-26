@@ -27,7 +27,7 @@ function initializeDatabase() {
         address TEXT NOT NULL,
         contact TEXT NOT NULL,
         alt_contact TEXT,
-        email TEXT NOT NULL,
+        email TEXT,
         photo TEXT,
         achievements TEXT,
         declaration INTEGER NOT NULL,
