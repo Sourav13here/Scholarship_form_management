@@ -1,0 +1,198 @@
+================================================================================
+  NUCLEON SCHOLARSHIP APPLICATION SYSTEM - SETUP GUIDE
+================================================================================
+
+Quick Start Guide for Setting Up the Scholarship Application System
+
+================================================================================
+STEP 1: INSTALL FPDF LIBRARY (REQUIRED FOR PDF GENERATION)
+================================================================================
+
+Option A - Automatic Installation (Recommended):
+-------------------------------------------------
+1. Open Command Prompt/Terminal in the BBTS folder
+2. Run: php install_fpdf.php
+3. Wait for installation to complete
+
+Option B - Manual Installation:
+--------------------------------
+1. Visit: http://www.fpdf.org/
+2. Download FPDF (version 1.85 or later)
+3. Extract the ZIP file
+4. Copy fpdf.php to: BBTS/fpdf/fpdf.php
+
+Option C - Using Composer:
+---------------------------
+1. Run: composer require setasign/fpdf
+2. Update require path in download_admit_card.php
+
+================================================================================
+STEP 2: START WEB SERVER
+================================================================================
+
+Option A - PHP Built-in Server (Easiest):
+------------------------------------------
+1. Open Command Prompt in BBTS folder
+2. Run: php -S localhost:8000
+3. Open browser: http://localhost:8000/form.html
+
+Option B - XAMPP:
+-----------------
+1. Copy BBTS folder to: C:\xampp\htdocs\
+2. Start Apache in XAMPP Control Panel
+3. Open browser: http://localhost/BBTS/form.html
+
+Option C - WAMP:
+----------------
+1. Copy BBTS folder to: C:\wamp64\www\
+2. Start WAMP server
+3. Open browser: http://localhost/BBTS/form.html
+
+================================================================================
+STEP 3: VERIFY INSTALLATION
+================================================================================
+
+1. Open form.html in browser
+2. Fill out a test application
+3. Submit the form
+4. Download the PDF admit card
+5. Access admin panel: admin-panel.php
+   - Username: admin
+   - Password: admin123
+
+================================================================================
+STEP 4: CONFIGURE ADMIN CREDENTIALS (IMPORTANT!)
+================================================================================
+
+1. Open admin-panel.php in a text editor
+2. Find lines 7-8:
+   $ADMIN_USERNAME = 'admin';
+   $ADMIN_PASSWORD = 'admin123';
+3. Change to secure credentials
+4. Save the file
+
+================================================================================
+FILE STRUCTURE
+================================================================================
+
+BBTS/
+├── form.html                  - Student application form
+├── submit_form.php            - Handles form submission
+├── download_admit_card.php    - Generates PDF admit cards
+├── admin-panel.php            - Admin dashboard
+├── database.html              - Database schema viewer
+├── config.php                 - Database configuration
+├── install_fpdf.php           - FPDF installer script
+├── scholarship.db             - SQLite database (auto-created)
+├── fpdf/
+│   └── fpdf.php              - PDF library
+├── README.md                  - Detailed documentation
+└── SETUP.txt                  - This file
+
+================================================================================
+SYSTEM REQUIREMENTS
+================================================================================
+
+✓ PHP 7.0 or higher
+✓ PDO SQLite extension (usually enabled by default)
+✓ Web server (Apache/Nginx/PHP built-in)
+✓ FPDF library
+
+================================================================================
+TESTING THE SYSTEM
+================================================================================
+
+1. Student Form Submission:
+   - Visit: form.html
+   - Fill all required fields
+   - Submit form
+   - Download admit card
+
+2. Admin Panel:
+   - Visit: admin-panel.php
+   - Login with admin credentials
+   - View statistics
+   - Download student admit cards
+
+3. Database Viewer:
+   - Visit: database.html
+   - View database schema
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Problem: "FPDF Library Not Installed" error
+Solution: Follow STEP 1 to install FPDF
+
+Problem: Database not created
+Solution: Check folder write permissions
+
+Problem: Form not submitting
+Solution: 
+  - Check browser console for errors
+  - Verify PHP is running
+  - Check submit_form.php path
+
+Problem: PDF not downloading
+Solution:
+  - Ensure FPDF is installed correctly
+  - Check PHP error logs
+  - Verify file permissions
+
+Problem: Admin panel not loading
+Solution:
+  - Clear browser cache
+  - Check PHP error logs
+  - Verify config.php exists
+
+================================================================================
+SECURITY RECOMMENDATIONS
+================================================================================
+
+1. Change admin password in admin-panel.php
+2. Use HTTPS in production
+3. Backup scholarship.db regularly
+4. Restrict database file access
+5. Keep PHP updated
+
+================================================================================
+DEPLOYMENT TO PRODUCTION SERVER
+================================================================================
+
+1. Upload all files to web server
+2. Install FPDF library
+3. Set proper file permissions:
+   - Files: 644
+   - Directories: 755
+   - scholarship.db: 666
+
+4. Configure .htaccess to protect database:
+   <Files "scholarship.db">
+       Order allow,deny
+       Deny from all
+   </Files>
+
+5. Enable HTTPS
+6. Change admin credentials
+7. Test all functionality
+
+================================================================================
+SUPPORT
+================================================================================
+
+For issues or questions:
+- Check README.md for detailed documentation
+- Review PHP error logs
+- Check browser console for JavaScript errors
+- Email: info@nucleoncoaching.com
+
+================================================================================
+VERSION INFORMATION
+================================================================================
+
+Version: 1.0
+Last Updated: October 2024
+Developed for: Nucleon Coaching Institute, Durgapur
+
+================================================================================

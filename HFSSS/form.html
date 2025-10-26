@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holy Flower Sr. Sec. School - Scholarship Test Application Form</title>
+    <meta name="description" content="This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+            color: white;
+            padding: 34px 26px;
+            text-align: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .logo-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .logo-bar img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            border-radius: 6px;
+            padding: 4px 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header h2 {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        /* Header action buttons */
+        .action-buttons {
+            display: inline-flex;
+            gap: 12px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+        .action-btn {
+            background: #ffffff;
+            color: #0d47a1;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: transform 0.08s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+            display: inline-block;
+            border: 1px solid rgba(13,71,161,0.25);
+        }
+        .action-btn:hover { background: #f6fbff; color: #0b3e8f; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+        .action-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(25,118,210,0.35), 0 3px 10px rgba(0,0,0,0.15); }
+        .action-btn.secondary { background: #ffffff; color: #0d47a1; border-color: rgba(13,71,161,0.25); }
+        .action-btn.secondary:hover { background: #f6fbff; color: #0b3e8f; }
+        @media (max-width: 520px) {
+            .action-buttons { flex-direction: column; }
+            .action-btn { width: 100%; text-align: center; }
+        }
+
+        /* HR spacing within header */
+        .header hr {
+            height: 1px;
+            border: 0;
+            background: rgba(255,255,255,0.8);
+            margin: 20px 0 26px;
+        }
+
+        /* Header action buttons */
+        .action-buttons {
+            display: inline-flex;
+            gap: 12px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+        .action-btn {
+            background: #ffffff;
+            color: #0d47a1;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: transform 0.08s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+            display: inline-block;
+            border: 1px solid rgba(13,71,161,0.25);
+        }
+        .action-btn:hover { background: #f6fbff; color: #0b3e8f; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+        .action-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(25,118,210,0.35), 0 3px 10px rgba(0,0,0,0.15); }
+        .action-btn.secondary { background: #ffffff; color: #0d47a1; border-color: rgba(13,71,161,0.25); }
+        .action-btn.secondary:hover { background: #f6fbff; color: #0b3e8f; }
+        @media (max-width: 520px) {
+            .action-buttons { flex-direction: column; }
+            .action-btn { width: 100%; text-align: center; }
+        }
+
+        /* HR spacing within header */
+        .header hr {
+            height: 1px;
+            border: 0;
+            background: rgba(255,255,255,0.8);
+            margin: 20px 0 26px;
+        }
+
+        .form-content {
+            padding: 30px 24px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #0d47a1;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0d47a1;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0d47a1;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 18px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(13, 71, 161, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .message {
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Temporary field highlight */
+        .field-error {
+            border-color: #e53935 !important;
+            box-shadow: 0 0 0 3px rgba(229,57,53,0.18) !important;
+            animation: pulseError 0.8s ease-in-out 2;
+        }
+        @keyframes pulseError {
+            0% { box-shadow: 0 0 0 0 rgba(229,57,53,0.28); }
+            50% { box-shadow: 0 0 0 6px rgba(229,57,53,0.12); }
+            100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.0); }
+        }
+
+        .photo-upload-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .photo-upload-wrapper {
+            flex: 1;
+        }
+
+        .photo-upload-wrapper input[type="file"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .photo-upload-wrapper input[type="file"]:focus {
+            outline: none;
+            border-color: #0d47a1;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 180px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .photo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-preview-placeholder {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        .photo-requirements {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-content {
+                padding: 30px 20px;
+            }
+
+            .photo-upload-container {
+                flex-direction: column;
+            }
+
+            .photo-preview {
+                width: 120px;
+                height: 150px;
+                margin: 0 auto;
+            }
+        }
+
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loader-spinner {
+            width: 56px;
+            height: 56px;
+            border: 6px solid rgba(255,255,255,0.4);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-bar">
+                
+                <img src="/scholarship/HFSSS/images/hflogo.png">
+                <img src="/scholarship/HFSSS/images/logo.png" alt="Nucleon Coaching Institute Logo">
+            </div>
+            
+            <h1>Holy Flower Sr. Sec. School Scholarship Test</h1>
+            <p>in collaboration with</p>
+            <p><b>Nucleon Coaching Institute, Durgapur</b></p>
+            <br>
+            <p>This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.</p>
+            <div class="action-buttons">
+                <a class="action-btn" href="https://holyflowerschool.com/" target="_blank" rel="noopener">Visit School Website</a>
+                <!-- <a class="action-btn secondary" href="/scholarship/HFSSS/images/details.pdf" target="_blank" rel="noopener">Test Details</a> -->
+            </div>
+            <br>
+            <hr color="white"><br>
+            <h2><b>Scholarship Application Form</b></h2>
+        </div>
+
+        <div class="form-content">
+            <div id="message" class="message"></div>
+
+            <form id="scholarshipForm" method="POST" action="submit_form.php">
+                <!-- Applicant Information Section -->
+                <div class="section-title">Applicant Information</div>
+
+                <div class="form-group">
+                    <label for="name">1. Name: <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="class">2. Class: <span class="required">*</span></label>
+                    <input type="text" id="class" name="class" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="school">3. School Name: <span class="required">*</span></label>
+                    <input type="text" id="school" name="school" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">4. Address: <span class="required">*</span></label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">5. Contact Number: <span class="required">*</span></label>
+                    <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alt_contact">6. WhatsApp Number:</label>
+                    <input type="tel" id="alt_contact" name="alt_contact" pattern="[0-9]{10}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">7. Email ID:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="photo">8. Upload Photo (Passport Size): <span class="required">*</span></label>
+                    <div class="photo-upload-container">
+                        <div class="photo-upload-wrapper">
+                            <input type="file" id="photo" name="photo" accept="image/jpeg,image/jpg,image/png" required>
+                            <div class="photo-requirements">
+                                <strong>Requirements:</strong><br>
+                                • Passport size photo (3.5 cm x 4.5 cm)<br>
+                                • Clear, recent photograph<br>
+                                • Accepted formats: JPG, JPEG, PNG<br>
+                                • Maximum size: 2MB
+                            </div>
+                        </div>
+                        <div class="photo-preview" id="photoPreview">
+                            <div class="photo-preview-placeholder">
+                                Photo Preview<br>
+                                <small>Upload to see preview</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements Section -->
+                <div class="section-title">Achievements</div>
+
+                <div class="form-group">
+                    <label for="achievements">9. Please mention any previous achievements in Science and Math:</label>
+                    <textarea id="achievements" name="achievements"></textarea>
+                </div>
+
+                <!-- Declaration Section -->
+                <div class="section-title">Declaration</div>
+
+                <div class="form-group">
+                    <label>10. Declaration:</label>
+                    <p style="margin: 10px 0; line-height: 1.6; color: #555;">
+                        I hereby declare that the information provided above is true to the best of my knowledge. 
+                        I understand that any false information may lead to disqualification from the scholarship program.
+                    </p>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="declaration" name="declaration" required>
+                        <label for="declaration">I agree to the declaration. <span class="required">*</span></label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="loaderOverlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <script>
+        // Photo preview functionality
+        document.getElementById('photo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const previewDiv = document.getElementById('photoPreview');
+            
+            if (file) {
+                // Validate file size (2MB max)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('File size must be less than 2MB');
+                    this.value = '';
+                    previewDiv.innerHTML = '<div class="photo-preview-placeholder">Photo Preview<br><small>Upload to see preview</small></div>';
+                    return;
+                }
+                
+                // Validate file type
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload a valid image file (JPG, JPEG, or PNG)');
+                    this.value = '';
+                    previewDiv.innerHTML = '<div class="photo-preview-placeholder">Photo Preview<br><small>Upload to see preview</small></div>';
+                    return;
+                }
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewDiv.innerHTML = '<img src="' + e.target.result + '" alt="Photo Preview">';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewDiv.innerHTML = '<div class="photo-preview-placeholder">Photo Preview<br><small>Upload to see preview</small></div>';
+            }
+        });
+
+        // Form submission
+        document.getElementById('scholarshipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const messageDiv = document.getElementById('message');
+            const loader = document.getElementById('loaderOverlay');
+            const submitBtn = this.querySelector('.submit-btn');
+            
+            // Show loading message
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'message';
+            messageDiv.style.background = '#e3f2fd';
+            messageDiv.style.color = '#0d47a1';
+            messageDiv.textContent = 'Submitting your application... Please wait.';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.7'; submitBtn.style.cursor = 'not-allowed'; }
+            if (loader) { loader.style.display = 'flex'; }
+            
+            fetch('submit_form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.style.display = 'block';
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.innerHTML = data.message + '<br><br><a href="download_admit_card.php?id=' + data.application_id + '" style="color: #155724; font-weight: bold;">Download Admit Card (PDF)</a>';
+                    // Hide the form so only success text and download link are visible
+                    this.style.display = 'none';
+
+                    // Scroll to message
+                    messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.message;
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+
+                    // If duplicate contact error, alert and focus + highlight the contact field
+                    if (typeof data.message === 'string' && data.message.toLowerCase().includes('contact number')) {
+                        try { alert(data.message); } catch (e) {}
+                        const contactInput = document.getElementById('contact');
+                        if (contactInput) {
+                            contactInput.focus();
+                            contactInput.classList.add('field-error');
+                            contactInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => contactInput.classList.remove('field-error'), 1800);
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'An error occurred. Please try again.';
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+            })
+            .finally(() => {
+                if (loader) { loader.style.display = 'none'; }
+            });
+        });
+    </script>
+</body>
+</html>

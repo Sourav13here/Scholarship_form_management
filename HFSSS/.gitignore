@@ -1,0 +1,42 @@
+# Nucleon Scholarship System - Git Ignore
+
+# Database files
+scholarship.db
+scholarship.db-journal
+*.db
+*.db-journal
+
+# Composer dependencies
+/vendor/
+composer.lock
+
+# FPDF library (if installed via composer)
+/fpdf/font/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# PHP cache
+*.cache
+
+# Error logs
+error_log
+php_errors.log

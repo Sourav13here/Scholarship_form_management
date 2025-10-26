@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nucleon Coaching Institute - Scholarship Application</title>
+    <title>Brahma Baba Techno School - Scholarship Test Application Form</title>
+    <meta name="description" content="This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.">
     <style>
         * {
             margin: 0;
@@ -69,6 +70,42 @@
             font-size: 14px;
             line-height: 1.6;
             opacity: 0.95;
+        }
+
+        /* Header action buttons */
+        .action-buttons {
+            display: inline-flex;
+            gap: 12px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+        .action-btn {
+            background: #ffffff;
+            color: #0d47a1;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: transform 0.08s ease, box-shadow 0.2s ease, color 0.2s ease, background 0.2s ease;
+            display: inline-block;
+            border: 1px solid rgba(13,71,161,0.25);
+        }
+        .action-btn:hover { background: #f6fbff; color: #0b3e8f; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+        .action-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(25,118,210,0.35), 0 3px 10px rgba(0,0,0,0.15); }
+        .action-btn.secondary { background: #ffffff; color: #0d47a1; border-color: rgba(13,71,161,0.25); }
+        .action-btn.secondary:hover { background: #f6fbff; color: #0b3e8f; }
+        @media (max-width: 520px) {
+            .action-buttons { flex-direction: column; }
+            .action-btn { width: 100%; text-align: center; }
+        }
+
+        /* HR spacing within header */
+        .header hr {
+            height: 1px;
+            border: 0;
+            background: rgba(255,255,255,0.8);
+            margin: 20px 0 26px;
         }
 
         .form-content {
@@ -187,6 +224,18 @@
             border: 1px solid #f5c6cb;
         }
 
+        /* Temporary field highlight */
+        .field-error {
+            border-color: #e53935 !important;
+            box-shadow: 0 0 0 3px rgba(229,57,53,0.18) !important;
+            animation: pulseError 0.8s ease-in-out 2;
+        }
+        @keyframes pulseError {
+            0% { box-shadow: 0 0 0 0 rgba(229,57,53,0.28); }
+            50% { box-shadow: 0 0 0 6px rgba(229,57,53,0.12); }
+            100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.0); }
+        }
+
         .photo-upload-container {
             display: flex;
             gap: 20px;
@@ -271,6 +320,32 @@
                 margin: 0 auto;
             }
         }
+
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loader-spinner {
+            width: 56px;
+            height: 56px;
+            border: 6px solid rgba(255,255,255,0.4);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -278,8 +353,8 @@
         <div class="header">
             <div class="logo-bar">
                 
-                <img src="/images/bbtLogo.png" alt="Holyflower Senior Secondary School Logo">
-                <img src="/images/logo.png" alt="Nucleon Coaching Institute Logo">
+                <img src="/scholarship/BBTS/images/bbtlogo.png">
+                <img src="/scholarship/BBTS/images/logo.png" alt="Nucleon Coaching Institute Logo">
             </div>
             
             <h1>Brahma Baba Techno School Scholarship Test</h1>
@@ -287,6 +362,10 @@
             <p><b>Nucleon Coaching Institute, Durgapur</b></p>
             <br>
             <p>This scholarship test is for Class X students, focusing on Science and Math subjects. Please fill out the form carefully.</p>
+            <div class="action-buttons">
+                <a class="action-btn" href="https://brahmababats.in/" target="_blank" rel="noopener">Visit School Website</a>
+                <a class="action-btn secondary" href="/scholarship/BBTS/images/details.pdf" target="_blank" rel="noopener">Test Details</a>
+            </div>
             <br>
             <hr color="white"><br>
             <h2><b>Scholarship Application Form</b></h2>
@@ -325,7 +404,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="alt_contact">6. Alternative Number:</label>
+                    <label for="alt_contact">6. WhatsApp Number:</label>
                     <input type="tel" id="alt_contact" name="alt_contact" pattern="[0-9]{10}">
                 </div>
 
@@ -384,6 +463,10 @@
         </div>
     </div>
 
+    <div id="loaderOverlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+
     <script>
         // Photo preview functionality
         document.getElementById('photo').addEventListener('change', function(e) {
@@ -425,6 +508,8 @@
             
             const formData = new FormData(this);
             const messageDiv = document.getElementById('message');
+            const loader = document.getElementById('loaderOverlay');
+            const submitBtn = this.querySelector('.submit-btn');
             
             // Show loading message
             messageDiv.style.display = 'block';
@@ -432,6 +517,8 @@
             messageDiv.style.background = '#e3f2fd';
             messageDiv.style.color = '#0d47a1';
             messageDiv.textContent = 'Submitting your application... Please wait.';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.7'; submitBtn.style.cursor = 'not-allowed'; }
+            if (loader) { loader.style.display = 'flex'; }
             
             fetch('submit_form.php', {
                 method: 'POST',
@@ -451,12 +538,29 @@
                 } else {
                     messageDiv.className = 'message error';
                     messageDiv.textContent = data.message;
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+
+                    // If duplicate contact error, alert and focus + highlight the contact field
+                    if (typeof data.message === 'string' && data.message.toLowerCase().includes('contact number')) {
+                        try { alert(data.message); } catch (e) {}
+                        const contactInput = document.getElementById('contact');
+                        if (contactInput) {
+                            contactInput.focus();
+                            contactInput.classList.add('field-error');
+                            contactInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => contactInput.classList.remove('field-error'), 1800);
+                        }
+                    }
                 }
             })
             .catch(error => {
                 messageDiv.style.display = 'block';
                 messageDiv.className = 'message error';
                 messageDiv.textContent = 'An error occurred. Please try again.';
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.style.cursor = 'pointer'; }
+            })
+            .finally(() => {
+                if (loader) { loader.style.display = 'none'; }
             });
         });
     </script>

@@ -55,7 +55,7 @@ This system provides a complete solution for managing scholarship applications f
 
 2. **Install FPDF Library**
    ```bash
-   cd BBTS
+   cd HFSSS
    php install_fpdf.php
    ```
    Or download manually from [fpdf.org](http://www.fpdf.org/)
