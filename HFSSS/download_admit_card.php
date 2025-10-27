@@ -50,7 +50,7 @@ try {
 
     $pdf->Cell($textW, 6, 'Nucleon Coaching Institute Scholarship Test', 0, 2, 'C');
     $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell($textW, 6, 'In collaboration with Holy Flower Sr. Sec. School, Teok', 0, 2, 'C');
+    $pdf->Cell($textW, 6, 'In collaboration with Holyflower Senior Secondary School, Teok', 0, 2, 'C');
 
     // Move below the header band and print Admit Card line
     $pdf->SetY(max($logoY + $logoW + 4, $pdf->GetY() + 4));
@@ -182,14 +182,14 @@ try {
     $y = $pdf->GetY();
     $pdf->SetX($xLeft); $pdf->SetFont('Arial', 'B', 12); $pdf->MultiCell($labelW, $rowH, 'School Name:', 0, 'L');
     $yAfterLabel = $pdf->GetY();
-    $pdf->SetXY($xLeft + $labelW, $y); $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW - $labelW, $rowH, 'Holy Flower Sr. Sec. School, Teok', 0, 'L');
+    $pdf->SetXY($xLeft + $labelW, $y); $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW - $labelW, $rowH, 'Holyflower Senior Secondary School, Teok', 0, 'L');
     $pdf->SetY(max($yAfterLabel, $pdf->GetY()));
 
     // Address
     $y = $pdf->GetY();
     $pdf->SetX($xLeft); $pdf->SetFont('Arial', 'B', 12); $pdf->MultiCell($labelW, $rowH, 'Address:', 0, 'L');
     $yAfterLabel = $pdf->GetY();
-    $pdf->SetXY($xLeft + $labelW, $y); $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW - $labelW, $rowH, 'Janagaon, Titaguri Part-II, Kokrajhar, BTR, Assam, Pin- 783370', 0, 'L');
+    $pdf->SetXY($xLeft + $labelW, $y); $pdf->SetFont('Arial', '', 12); $pdf->MultiCell($contentW - $labelW, $rowH, 'Hospital Road, Teok, Jorhat -785112, Assam', 0, 'L');
     $pdf->SetY(max($yAfterLabel, $pdf->GetY()));
 
     // Scholarship Exam date
@@ -234,13 +234,39 @@ try {
     $signH = 16; // fixed height to standardize alignment
     $captionY = $yStart + $signH + 2; // place caption ~2mm below the image bottom
 
-    $leftBottom = $yStart; // Keep variable for SetY
+    /// Left: Principal ()
+    $signPath2 = __DIR__ . '/images/sign2.png';
+    $leftX = 14; // add left margin for left signature
+    $leftBottom = $yStart;
+    if (file_exists($signPath2)) {
+        $pdf->Image($signPath2, $leftX, $yStart, $signW, $signH);
+        $pdf->SetY($captionY);
+        $pdf->SetX($leftX);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->Cell($signW, 6, 'Principal', 0, 1, 'C');
+        $pdf->SetX($leftX);
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell($signW, 5, 'Holy Flower Sr. Sec. School, Teok', 0, 1, 'C');
+        $leftBottom = $captionY + 11; // 6 + 5 lines
+    } else {
+        // Fallback text if image missing
+        $pdf->SetY($yStart + 12);
+        $pdf->SetX($leftX);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->Cell($signW, 6, 'Principal', 0, 1, 'C');
+        $pdf->SetX($leftX);
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell($signW, 5, 'Holy Flower Sr. Sec. School, Teok', 0, 1, 'C');
+        $leftBottom = $pdf->GetY();
+    }
 
-    // Right-aligned Director Signature
+    // Right: Director (Nucleon)
     $signPath = __DIR__ . '/images/sign.png';
+    $rightMargin = 10; // default margin
     $pageWidth = 210; // A4 width
-    $rightMargin = 10;
-    $rightX = $pageWidth - $rightMargin - $signW - 4; // Add extra 4mm margin
+    $rightX = $pageWidth - $rightMargin - $signW - 4; // add right margin for right signature
     $rightBottom = $yStart;
     if (file_exists($signPath)) {
         $pdf->Image($signPath, $rightX, $yStart, $signW, $signH);
@@ -367,7 +393,7 @@ try {
     $pdf->SetFont('Arial', '', 12);
     $pdf->MultiCell($contentW, 6, 'Results on 15th December, 2025 on the HFSSS Centre website; also via email/WhatsApp.');
     $pdf->Ln(1);
-    $pdf->MultiCell($contentW, 6, "For any queries or assistance, please contact:\n Phone: 6003214405, 9101458652\n Email: me.dibyendu92@gmail.com");
+    $pdf->MultiCell($contentW, 6, "For any queries or assistance, please contact:\n Phone: 8638312316, 9856146700\n Email: me.dibyendu92@gmail.com");
 
     // Output PDF
     $pdf->Output('D', 'Admit_Card_' . $application['application_id'] . '.pdf');
